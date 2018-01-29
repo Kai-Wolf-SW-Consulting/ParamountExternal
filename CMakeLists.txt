@@ -37,7 +37,12 @@ if(APPLE)
   endif()
 endif()
 
-project(ParamountExternal)
+project(ParamountExternal VERSION 1.0.0)
+
+option(BUILD_TESTING "Build with tests" ON)
+if(BUILD_TESTING)
+  enable_testing()
+endif()
 
 set(platform)
 if(APPLE)
@@ -69,4 +74,17 @@ include(qt)
 include(boost)
 include(gtest)
 
+# Install all build artifacts into common install directory
+install(DIRECTORY ${install_location} DESTINATION .)
 include(paramount.bundle)
+
+message("CMAKE_SYSTEM_NAME: ${CMAKE_SYSTEM_NAME}")
+message("CMAKE_SYSTEM_VERSION: ${CMAKE_SYSTEM_VERSION}")
+message("CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
+message("CMAKE_GENERATOR_TOOLSET: ${CMAKE_GENERATOR_TOOLSET}")
+message("CMAKE_GENERATOR_PLATFORM: ${CMAKE_GENERATOR_PLATFORM}")
+message("CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION: ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION}")
+message("CMAKE_VS_MSBUILD_COMMAND: ${CMAKE_VS_MSBUILD_COMMAND}")
+message("CMAKE_VS_PLATFORM_TOOLSET: ${CMAKE_VS_PLATFORM_TOOLSET}")
+message("CMAKE_C_COMPILER: ${CMAKE_C_COMPILER}")
+message("CMAKE_CXX_COMPILER: ${CMAKE_CXX_COMPILER}")

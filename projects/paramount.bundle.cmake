@@ -9,4 +9,18 @@ set(CPACK_PACKAGE_INSTALL_DIRECTORY "paramount")
 set(CPACK_PACKAGE_VERSION_PATCH ${CPACK_PACKAGE_VERSION_PATCH})
 
 set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}${ParamountExternal_VERSION}-${platform})
+include(InstallRequiredSystemLibraries)
 include(CPack)
+
+add_test(GenerateParamountBundle-TGZ
+  ${CMAKE_CPACK_COMMAND} -G TGZ
+  WORKING_DIRECTORY ${ParamountExternal_BINARY_DIR})
+
+add_test(GenerateParamountBundle-ZIP
+  ${CMAKE_CPACK_COMMAND} -G ZIP
+  WORKING_DIRECTORY ${ParamountExternal_BINARY_DIR})
+
+set_tests_properties(
+  GenerateParamountBundle-TGZ
+  GenerateParamountBundle-TGZ
+  PROPERTIES TIMEOUT 600)
