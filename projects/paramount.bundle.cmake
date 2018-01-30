@@ -8,7 +8,8 @@ set(CPACK_PACKAGE_VERSION_MINOR ${ParamountExternal_VERSION_MINOR})
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "paramount")
 set(CPACK_PACKAGE_VERSION_PATCH ${CPACK_PACKAGE_VERSION_PATCH})
 
-set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}${ParamountExternal_VERSION}-${platform})
+set(CPACK_PACKAGE_FILE_NAME 
+  ${CPACK_PACKAGE_NAME}-${ParamountExternal_VERSION}-${platform})
 include(InstallRequiredSystemLibraries)
 include(CPack)
 

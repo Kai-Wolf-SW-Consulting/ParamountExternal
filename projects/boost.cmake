@@ -43,7 +43,7 @@ endif()
 ExternalProject_Add(boost
   ${boost_revision}
   DOWNLOAD_DIR ${download_location}
-  INSTALL_DIR ${install_location}
+  INSTALL_DIR ${install_location}/boost
   SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/boost
   ${boost_cmds}
   BUILD_IN_SOURCE 1)

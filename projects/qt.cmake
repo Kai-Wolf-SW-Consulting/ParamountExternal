@@ -6,14 +6,6 @@ set(qt_with_args
   -no-sql-sqlite -no-sql-tds -no-journald -no-syslog -no-slog2 -opengl desktop
   -no-ssl -no-openssl -no-securetransport -no-libproxy -no-sctp)
 
-if(WIN32)
-  set(config_script ./configure.bat)
-  list(APPEND qt_with_args -platform win32-msvc)
-else()
-  set(config_script ./configure)
-  list(APPEND qt_with_args -c++std c++14)
-endif()
-
 set(qt_skip_modules
   -skip qtactiveqt -skip qtconnectivity -skip qtspeech -skip qtdoc
   -skip qtgamepad -skip qtlocation -skip qtpurchasing -skip qtdeclarative
@@ -25,10 +17,25 @@ set(qt_skip_modules
   -skip qtandroidextras -skip qtcharts -skip qtmultimedia -skip qtnetworkauth
   -skip qtgraphicaleffects)
 
-ExternalProject_Add(qt5
-  ${qt_revision}
-  DOWNLOAD_DIR ${download_location}
-  INSTALL_DIR ${install_location}
-  CONFIGURE_COMMAND ${config_script} --prefix=<INSTALL_DIR>
-    ${qt_with_args} ${qt_skip_modules}
-  BUILD_IN_SOURCE 1)
+if(WIN32)
+  find_program(NMAKE_EXECUTABLE NAMES nmake.exe)
+  mark_as_advanced(NMAKE_EXECUTABLE)
+
+  ExternalProject_Add(qt5
+    ${qt_revision}
+    DOWNLOAD_DIR ${download_location}
+    INSTALL_DIR ${install_location}/qt5
+    CONFIGURE_COMMAND ./configure.bat --prefix=<INSTALL_DIR>
+      -platform win32-msvc ${qt_with_args} ${qt_skip_modules}
+    BUILD_COMMAND ${NMAKE_EXECUTABLE}
+    INSTALL_COMMAND ${NMAKE_EXECUTABLE} install
+    BUILD_IN_SOURCE 1)
+else()
+  ExternalProject_Add(qt5
+    ${qt_revision}
+    DOWNLOAD_DIR ${download_location}
+    INSTALL_DIR ${install_location}/qt5
+    CONFIGURE_COMMAND ./configure --prefix=<INSTALL_DIR>
+      -c++std c++14 ${qt_with_args} ${qt_skip_modules}
+    BUILD_IN_SOURCE 1)
+endif()

@@ -1,7 +1,7 @@
 ExternalProject_Add(gtest
   ${gtest_revision}
   DOWNLOAD_DIR ${download_location}
-  INSTALL_DIR ${install_location}
+  INSTALL_DIR ${install_location}/gtest
   CMAKE_ARGS
     -Wno-dev
     -DBUILD_SHARED_LIBS=ON
